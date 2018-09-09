@@ -64,25 +64,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     public update() {
-        let cursors = this.input.keyboard.createCursorKeys();
-
-        if (cursors.left.isDown) {
-            this.player.setVelocityX(-160);
-            this.player.anims.play('left', true);
-        }
-        else if (cursors.right.isDown) {
-            this.player.setVelocityX(160);
-            this.player.anims.play('right', true);
-        }
-        else {
-            this.player.setVelocityX(0);
-            this.player.anims.play('turn');
-        }
-
-        // define jump action
-        if (cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-330);
-        }
+        this.definePlayerKeyMovement();
     }
     // #endregion
 
@@ -143,7 +125,7 @@ export class MainScene extends Phaser.Scene {
         this.score = {
             value: 0,
             text: this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' })
-        }
+        };
 
     }
     // #endregion
@@ -185,8 +167,30 @@ export class MainScene extends Phaser.Scene {
         let bomb = this.bombs.create(x, 16, 'bomb');
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        bomb.setVelocity(Phaser.Math.Between(-100, 300), 20);
         bomb.allowGravity = false;
+    }
+
+    private definePlayerKeyMovement() {
+        let cursors = this.input.keyboard.createCursorKeys();
+
+        if (cursors.left.isDown) {
+            this.player.setVelocityX(-160);
+            this.player.anims.play('left', true);
+        }
+        else if (cursors.right.isDown) {
+            this.player.setVelocityX(160);
+            this.player.anims.play('right', true);
+        }
+        else {
+            this.player.setVelocityX(0);
+            this.player.anims.play('turn');
+        }
+
+        // define jump action
+        if (cursors.up.isDown && this.player.body.touching.down) {
+            this.player.setVelocityY(-400);
+        }
     }
     // #endregion
 }
